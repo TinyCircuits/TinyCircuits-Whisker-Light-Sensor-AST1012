@@ -1,7 +1,7 @@
 /*************************************************************************
- * TSL2572 WhiskerBoard Tutorial:
- * Ambient Light Sensor example code that will print the lux value read
- * from the sensor to both the TinyScreen+, and the Serial Monitor
+ * TSL2572 Ambient Light Sensor Whisker Tutorial:
+ * This program will print the lux value read from the sensor to both the 
+ * TinyScreen+ if used, and the Serial Monitor
  * 
  * Hardware by: TinyCircuits
  * Code by: Laverena Wienclaw for TinyCircuits
@@ -92,11 +92,6 @@ void selectPort(int port) {
   Wire.endTransmission();
 }
 
-/*
-  The rest of this program is direct interfacing with the sensor which
-  you don't really need to understand in order to use!
-*/
-
 // Used to interface with the sensor by writing to its registers directly 
 void Tsl2572RegisterWrite(byte regAddr, byte regData) {
   Wire.beginTransmission(TSL2572_I2CADDR);
@@ -105,7 +100,7 @@ void Tsl2572RegisterWrite(byte regAddr, byte regData) {
   Wire.endTransmission();
 }
 
-// Initializes the light sensor by writing different commands to it's registers
+// Initializes the light sensor to be ready for output
 void TSL2572Init(uint8_t gain) {
   Tsl2572RegisterWrite( 0x0F, gain );//set gain
   Tsl2572RegisterWrite( 0x01, 0xED );//51.87 ms
@@ -142,4 +137,3 @@ float Tsl2572ReadAmbientLight() {
   cpl = max(lux1, lux2);
   return max(cpl, 0.0);
 }
-
