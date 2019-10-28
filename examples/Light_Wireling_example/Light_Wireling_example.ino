@@ -1,5 +1,5 @@
 /*************************************************************************
- * TSL2572 Ambient Light Sensor Whisker Tutorial:
+ * TSL2572 Ambient Light Sensor Wireling Tutorial:
  * This program will print the lux value read from the sensor to both the 
  * TinyScreen+ if used, and the Serial Monitor
  * 
@@ -32,8 +32,16 @@ int background = TS_8b_Black;
 // Global variable for gain value used to Read the sensor
 int gain_val = 0;
 
+// Make Serial Monitor compatible for all TinyCircuits processors
+#if defined(ARDUINO_ARCH_AVR)
+  #define SerialMonitorInterface Serial
+#elif defined(ARDUINO_ARCH_SAMD)
+  #define SerialMonitorInterface SerialUSB
+#endif
+
+
 void setup() {
-  SerialUSB.begin(115200);
+  SerialMonitorInterface.begin(115200);
   Wire.begin();
 
   // Setup and style for TinyScreen+
@@ -55,11 +63,12 @@ void setup() {
 }
 
 void loop() {
+  SerialMonitorInterface.begin(9600);
   float AmbientLightLux = Tsl2572ReadAmbientLight();
 
   // Print lux value to Serial Monitor
-  SerialUSB.print("Lux: ");
-  SerialUSB.println(AmbientLightLux);
+  SerialMonitorInterface.print("Lux: ");
+  SerialMonitorInterface.println(AmbientLightLux);
 
   // This will make the screen look a little unsteady but is needed in order
   // to clear old values 
@@ -84,7 +93,7 @@ void printScreen(float luxValue){
   display.print(luxValue);
 }
 
-// **This function is necessary for all Whisker boards attached through an Adapter board**
+// **This function is necessary for all Wireling boards attached through an Adapter board**
 // Selects the correct address of the port being used in the Adapter board
 void selectPort(int port) {
   Wire.beginTransmission(0x70);
