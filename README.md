@@ -1,7 +1,7 @@
-# TinyCircuits Whisker Light Sensor
+# TinyCircuits Wireling Light Sensor
 # AST1012 Rev2
 
-The design files are located under design_files/ for the TinyCircuits AST1012 Rev 2 PCB. This is a whisker board which features the AMS TSL2572 ambient light sensor with built in UV rejection filter and is also capable of operating in IR light environments. Its high sensitivity range enables it to operate even behind dark glass (such as in portable applications like Smartphones).
+The design files are located under design_files/ for the TinyCircuits AST1012 Rev 2 PCB. This is a Wireling board which features the AMS TSL2572 ambient light sensor with built in UV rejection filter and is also capable of operating in IR light environments. Its high sensitivity range enables it to operate even behind dark glass (such as in portable applications like Smartphones).
 
 Format is in Cadsoft Eagle format - Eagle version 6.2 was used for the original design.
 
