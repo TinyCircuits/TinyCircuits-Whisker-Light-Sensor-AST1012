@@ -39,8 +39,14 @@ int gain_val = 0;
   #define SerialMonitorInterface SerialUSB
 #endif
 
+const int powerPin = 4; // Power to Wireling
+
 
 void setup() {
+  // Power Wireling
+  pinMode(powerPin, OUTPUT);
+  digitalWrite(powerPin, HIGH);
+  
   SerialMonitorInterface.begin(115200);
   Wire.begin();
 
@@ -63,6 +69,7 @@ void setup() {
 }
 
 void loop() {
+  setup();
   SerialMonitorInterface.begin(9600);
   float AmbientLightLux = Tsl2572ReadAmbientLight();
 
