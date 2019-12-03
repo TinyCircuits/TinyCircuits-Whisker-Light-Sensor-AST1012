@@ -69,7 +69,6 @@ void setup() {
 }
 
 void loop() {
-  setup();
   SerialMonitorInterface.begin(9600);
   float AmbientLightLux = Tsl2572ReadAmbientLight();
 
