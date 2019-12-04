@@ -1,21 +1,17 @@
 /*************************************************************************
  * TSL2572 Ambient Light Sensor Wireling Tutorial:
- * This program will print the lux value read from the sensor to both the 
- * TinyScreen+ if used, and the Serial Monitor
+ * This program will print the lux value read from the sensor to  the 
+ * Serial Monitor
  * 
  * Hardware by: TinyCircuits
- * Code by: Laverena Wienclaw for TinyCircuits
+ * Code by: Ken Burns & Laveréna Wienclaw for TinyCircuits
  *
- * Initiated: Mon. 11/29/2017 
- * Updated: Tue. 07/03/2018
+ * Initiated: 11/29/2017 
+ * Updated: 12/04/2019
  ************************************************************************/
 
 #include <Wire.h>         // For I2C communication with sensor
-#include <TinyScreen.h>   // For interfacing with the TinyScreen+
-
-// TinyScreen+ variables
-TinyScreen display = TinyScreen(TinyScreenPlus);
-int background = TS_8b_Black;
+#include <Wireling.h>     // For interfacing with Wirelings
 
 // Communication address with the sensor
 #define TSL2572_I2CADDR     0x39
@@ -39,25 +35,13 @@ int gain_val = 0;
   #define SerialMonitorInterface SerialUSB
 #endif
 
-const int powerPin = 4; // Power to Wireling
-
-
 void setup() {
-  // Power Wireling
-  pinMode(powerPin, OUTPUT);
-  digitalWrite(powerPin, HIGH);
-  
   SerialMonitorInterface.begin(115200);
   Wire.begin();
 
-  // Setup and style for TinyScreen+
-  display.begin();
-  display.setFlip(true);
-  display.setBrightness(15);
-  display.setFont(thinPixel7_10ptFontInfo);
-  display.fontColor(TS_8b_White, background);
-  
-  selectPort(0); // Port #'s correspond to backside of the Adapter TinyShield
+  // Initialize Wireling
+  Wireling.begin();
+  Wireling.selectPort(0); // Port #'s correspond to backside of the Adapter TinyShield
 
 //***************************************
 // SETTINGS & ADJUSTMENTS 
@@ -75,36 +59,6 @@ void loop() {
   // Print lux value to Serial Monitor
   SerialMonitorInterface.print("Lux: ");
   SerialMonitorInterface.println(AmbientLightLux);
-
-  // This will make the screen look a little unsteady but is needed in order
-  // to clear old values 
-  display.clearScreen();
-  printScreen(AmbientLightLux); // Print lux to TinyScreen
-  delay(500);
-}
-
-// Prints the lux values to the TinyScreen
-void printScreen(float luxValue){
-  // This will make the screen look a little unsteady but is needed in order
-  // to clear old values 
-  display.clearScreen();
-  
-  display.fontColor(TS_8b_White, background);
-  display.setCursor(0, 0);
-  display.print("TSL2572 Values:");
-
-  display.fontColor(TS_8b_Yellow, background);
-  display.setCursor(0, 12);
-  display.print("Lux = ");
-  display.print(luxValue);
-}
-
-// **This function is necessary for all Wireling boards attached through an Adapter board**
-// Selects the correct address of the port being used in the Adapter board
-void selectPort(int port) {
-  Wire.beginTransmission(0x70);
-  Wire.write(0x04 + port);
-  Wire.endTransmission();
 }
 
 // Used to interface with the sensor by writing to its registers directly 
