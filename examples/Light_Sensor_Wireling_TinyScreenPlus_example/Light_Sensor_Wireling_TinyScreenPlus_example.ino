@@ -4,10 +4,10 @@
  * TinyScreen+ if used, and the Serial Monitor
  * 
  * Hardware by: TinyCircuits
- * Code by: Laverena Wienclaw for TinyCircuits
+ * Code by: Laveréna Wienclaw for TinyCircuits
  *
- * Initiated: Mon. 11/29/2017 
- * Updated: Tue. 07/03/2018
+ * Initiated: 11/29/2017 
+ * Updated: 04/21/2021
  ************************************************************************/
 
 #include <Wire.h>         // For I2C communication with sensor
@@ -28,7 +28,7 @@ int background = TS_8b_Black;
 #define GAIN_120X 3
 
 //only use this with 1x and 8x gain settings
-#define GAIN_DIVIDE_6 true
+#define GAIN_DIVIDE_6 false
 
 // Global variable for gain value used to Read the sensor
 int gain_val = 0;
@@ -41,7 +41,7 @@ int gain_val = 0;
 #endif
 
 void setup() {
-  SerialMonitorInterface.begin(115200);
+  SerialMonitorInterface.begin(9600);
   Wire.begin();
 
   // Initialize Wireling
@@ -65,7 +65,6 @@ void setup() {
 }
 
 void loop() {
-  SerialMonitorInterface.begin(9600);
   float AmbientLightLux = Tsl2572ReadAmbientLight();
 
   // Print lux value to Serial Monitor

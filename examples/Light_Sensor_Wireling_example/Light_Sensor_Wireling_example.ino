@@ -7,7 +7,7 @@
  * Code by: Ken Burns & Laveréna Wienclaw for TinyCircuits
  *
  * Initiated: 11/29/2017 
- * Updated: 12/04/2019
+ * Updated: 04/21/2021
  ************************************************************************/
 
 #include <Wire.h>         // For I2C communication with sensor
@@ -23,7 +23,7 @@
 #define GAIN_120X 3
 
 //only use this with 1x and 8x gain settings
-#define GAIN_DIVIDE_6 true
+#define GAIN_DIVIDE_6 false
 
 // Global variable for gain value used to Read the sensor
 int gain_val = 0;
@@ -36,13 +36,13 @@ int gain_val = 0;
 #endif
 
 void setup() {
-  SerialMonitorInterface.begin(115200);
+  SerialMonitorInterface.begin(9600);
   Wire.begin();
 
   // Initialize Wireling
   Wireling.begin();
-  Wireling.selectPort(0); // Port #'s correspond to backside of the Adapter TinyShield
-
+  Wireling.selectPort(0); 
+  
 //***************************************
 // SETTINGS & ADJUSTMENTS 
 //***************************************
@@ -53,7 +53,6 @@ void setup() {
 }
 
 void loop() {
-  SerialMonitorInterface.begin(9600);
   float AmbientLightLux = Tsl2572ReadAmbientLight();
 
   // Print lux value to Serial Monitor
